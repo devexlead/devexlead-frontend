@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { CycleTime } from './CycleTime';
 import { BacklogItemFlags } from './BacklogItemFlags';
 
-interface DataRow {
+interface BacklogItemRow {
   id: string;
   title: string;
   cycleTime: {
@@ -30,7 +30,7 @@ interface DataRow {
   };
 }
 
-const rows: DataRow[] = [
+const backlogItemRows: BacklogItemRow[] = [
   {
     id: 'DX-1',
     title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet',
@@ -64,12 +64,12 @@ const rows: DataRow[] = [
 ];
 
 export const BacklogItems: React.FC = () => {
-  const tableRows: JSX.Element[] = [];
+  const backlogItemsTable: JSX.Element[] = [];
 
   // Use a for loop to create a TableRow for each item in the rows array.
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    tableRows.push(
+  for (let i = 0; i < backlogItemRows.length; i++) {
+    const row = backlogItemRows[i];
+    backlogItemsTable.push(
       <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
         <TableCell align="left">{row.id}</TableCell>
         <TableCell align="left">Team</TableCell>
@@ -124,7 +124,7 @@ export const BacklogItems: React.FC = () => {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{tableRows}</TableBody>
+        <TableBody>{backlogItemsTable}</TableBody>
       </Table>
     </TableContainer>
   );
