@@ -17,6 +17,7 @@ interface ApiResponse {
 interface BacklogItem {
   id: string;
   title: string;
+  noteCount: number;
   cycleTime: {
     development: number;
     review: number;
@@ -102,10 +103,10 @@ export const BacklogItems: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {backlogItems.map(({ id, title, cycleTime, flags }) => (
+          {backlogItems.map(({ id, title, noteCount, cycleTime, flags }) => (
             <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="left">
-                {id} <NoteButton />
+                {id} <NoteButton count={noteCount} />
               </TableCell>
               <TableCell align="left">Team</TableCell>
               <TableCell align="left">Type</TableCell>
