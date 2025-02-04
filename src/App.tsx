@@ -1,6 +1,5 @@
-import { BacklogItemFlags } from './components/BacklogItemFlags';
-import { CycleTime } from './components/CycleTime';
 import { MetricChip } from './components/MetricChip';
+import { BacklogItems } from './components/BacklogItems';
 
 export const App = () => {
   return (
@@ -9,10 +8,8 @@ export const App = () => {
       <MetricChip value={100} direction="descending" upperLimit={70} lowerLimit={20} symbol="%" />
       <br />
       <br />
-      <BacklogItemFlags showIncident={true} showBlocked={true} showNonEstimated showComments />
-      <br />
-      <br />
-      <CycleTime development={3} review={2} test={5} />
+
+      <BacklogItems />
     </>
   );
 };

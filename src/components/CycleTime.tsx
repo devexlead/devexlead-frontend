@@ -11,16 +11,23 @@ interface CycleTimeProps {
   test: number;
 }
 
-export const CycleTime: React.FC<CycleTimeProps> = ({
-  development = 0,
-  review = 0,
-  test = 0,
-}) => {
+export const CycleTime: React.FC<CycleTimeProps> = ({ development = 0, review = 0, test = 0 }) => {
+  // Helper function to determine the color based on the value.
+  const getBadgeColor = (value: number) => {
+    if (value < 2) {
+      return 'success';
+    } else if (value > 2) {
+      return 'error'; // "success" corresponds to green in Material UI
+    } else {
+      return 'warning';
+    }
+  };
+
   return (
     <>
       <Badge
         badgeContent={development}
-        color="primary"
+        color={getBadgeColor(development)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -33,7 +40,7 @@ export const CycleTime: React.FC<CycleTimeProps> = ({
       &nbsp;&nbsp;&nbsp;
       <Badge
         badgeContent={review}
-        color="primary"
+        color={getBadgeColor(review)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -46,7 +53,7 @@ export const CycleTime: React.FC<CycleTimeProps> = ({
       &nbsp;&nbsp;&nbsp;
       <Badge
         badgeContent={test}
-        color="primary"
+        color={getBadgeColor(test)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
