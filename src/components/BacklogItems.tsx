@@ -54,37 +54,31 @@ export const BacklogItems: React.FC = () => {
       });
   }, []);
 
-  const backlogItemsTable: JSX.Element[] = [];
-
-  // Use a for loop to create a TableRow for each item in the backlogItems array.
-  for (let i = 0; i < backlogItems.length; i++) {
-    const item = backlogItems[i];
-    backlogItemsTable.push(
-      <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-        <TableCell align="left">{item.id}</TableCell>
-        <TableCell align="left">Team</TableCell>
-        <TableCell align="left">Type</TableCell>
-        <TableCell align="left">Investment</TableCell>
-        <TableCell align="left">{item.title}</TableCell>
-        <TableCell align="left">
-          <CycleTime development={item.cycleTime.development} review={item.cycleTime.review} test={item.cycleTime.test} />
-        </TableCell>
-        <TableCell align="left">
-          <BacklogItemFlags
-            showRework={item.flags.isRework}
-            showBlocked={item.flags.isBlocked}
-            showUpdated={item.flags.isUpdated}
-            showIncident={item.flags.isIncident}
-            showUnplanned={item.flags.isUnplanned}
-            showReEstimated={item.flags.isReEstimated}
-            showNonEstimated={item.flags.isNonEstimated}
-            showSubTasks={item.flags.isSubTasks}
-            showComments={item.flags.isComments}
-          />
-        </TableCell>
-      </TableRow>,
-    );
-  }
+  const backlogItemsTable = backlogItems.map((item) => (
+    <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+      <TableCell align="left">{item.id}</TableCell>
+      <TableCell align="left">Team</TableCell>
+      <TableCell align="left">Type</TableCell>
+      <TableCell align="left">Investment</TableCell>
+      <TableCell align="left">{item.title}</TableCell>
+      <TableCell align="left">
+        <CycleTime development={item.cycleTime.development} review={item.cycleTime.review} test={item.cycleTime.test} />
+      </TableCell>
+      <TableCell align="left">
+        <BacklogItemFlags
+          showRework={item.flags.isRework}
+          showBlocked={item.flags.isBlocked}
+          showUpdated={item.flags.isUpdated}
+          showIncident={item.flags.isIncident}
+          showUnplanned={item.flags.isUnplanned}
+          showReEstimated={item.flags.isReEstimated}
+          showNonEstimated={item.flags.isNonEstimated}
+          showSubTasks={item.flags.isSubTasks}
+          showComments={item.flags.isComments}
+        />
+      </TableCell>
+    </TableRow>
+  ));
 
   return (
     <TableContainer component={Paper}>
