@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,7 +9,11 @@ import Paper from '@mui/material/Paper';
 import { CycleTime } from './CycleTime';
 import { BacklogItemFlags } from './BacklogItemFlags';
 
-interface backlogItem {
+interface ApiResponse {
+  data: BacklogItem[];
+}
+
+interface BacklogItem {
   id: string;
   title: string;
   cycleTime: {
@@ -30,66 +34,52 @@ interface backlogItem {
   };
 }
 
-const backlogItems: backlogItem[] = [
-  {
-    id: 'DX-1',
-    title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet',
-    cycleTime: { development: 2, review: 3, test: 0 },
-    flags: { isBlocked: true },
-  },
-  {
-    id: 'DX-2',
-    title: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-    cycleTime: { development: 3, review: 2, test: 2 },
-    flags: { isNonEstimated: true },
-  },
-  {
-    id: 'DX-3',
-    title: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-    cycleTime: { development: 5, review: 6, test: 0 },
-    flags: { isIncident: true },
-  },
-  {
-    id: 'DX-4',
-    title: 'Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor',
-    cycleTime: { development: 1, review: 9, test: 2 },
-    flags: { isRework: true, isComments: true },
-  },
-  {
-    id: 'DX-5',
-    title: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-    cycleTime: { development: 5, review: 0, test: 0 },
-    flags: { isComments: true },
-  },
-];
-
 export const BacklogItems: React.FC = () => {
+  const [backlogItems, setBacklogItems] = useState<BacklogItem[]>([]);
+
+  useEffect(() => {
+    // Replace this URL with your actual REST API endpoint.
+    fetch('https://devexlead.com/api/v1/backlog')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json: ApiResponse) => {
+        setBacklogItems(json.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching backlog items:', error);
+      });
+  }, []);
+
   const backlogItemsTable: JSX.Element[] = [];
 
   // Use a for loop to create a TableRow for each item in the backlogItems array.
   for (let i = 0; i < backlogItems.length; i++) {
-    const backlogItem = backlogItems[i];
+    const item = backlogItems[i];
     backlogItemsTable.push(
-      <TableRow key={backlogItem.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-        <TableCell align="left">{backlogItem.id}</TableCell>
+      <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+        <TableCell align="left">{item.id}</TableCell>
         <TableCell align="left">Team</TableCell>
         <TableCell align="left">Type</TableCell>
         <TableCell align="left">Investment</TableCell>
-        <TableCell align="left">{backlogItem.title}</TableCell>
+        <TableCell align="left">{item.title}</TableCell>
         <TableCell align="left">
-          <CycleTime development={backlogItem.cycleTime.development} review={backlogItem.cycleTime.review} test={backlogItem.cycleTime.test} />
+          <CycleTime development={item.cycleTime.development} review={item.cycleTime.review} test={item.cycleTime.test} />
         </TableCell>
         <TableCell align="left">
           <BacklogItemFlags
-            showRework={backlogItem.flags.isRework}
-            showBlocked={backlogItem.flags.isBlocked}
-            showUpdated={backlogItem.flags.isUpdated}
-            showIncident={backlogItem.flags.isIncident}
-            showUnplanned={backlogItem.flags.isUnplanned}
-            showReEstimated={backlogItem.flags.isReEstimated}
-            showNonEstimated={backlogItem.flags.isNonEstimated}
-            showSubTasks={backlogItem.flags.isSubTasks}
-            showComments={backlogItem.flags.isComments}
+            showRework={item.flags.isRework}
+            showBlocked={item.flags.isBlocked}
+            showUpdated={item.flags.isUpdated}
+            showIncident={item.flags.isIncident}
+            showUnplanned={item.flags.isUnplanned}
+            showReEstimated={item.flags.isReEstimated}
+            showNonEstimated={item.flags.isNonEstimated}
+            showSubTasks={item.flags.isSubTasks}
+            showComments={item.flags.isComments}
           />
         </TableCell>
       </TableRow>,
@@ -111,7 +101,7 @@ export const BacklogItems: React.FC = () => {
               <b>Type</b>
             </TableCell>
             <TableCell align="left" sx={{ width: '5%' }}>
-              <b>Investmet</b>
+              <b>Investment</b>
             </TableCell>
             <TableCell align="left">
               <b>Title</b>
