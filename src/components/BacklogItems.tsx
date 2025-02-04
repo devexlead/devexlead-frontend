@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { CycleTime } from './CycleTime';
 import { BacklogItemFlags } from './BacklogItemFlags';
 
-interface BacklogItemRow {
+interface backlogItem {
   id: string;
   title: string;
   cycleTime: {
@@ -30,7 +30,7 @@ interface BacklogItemRow {
   };
 }
 
-const backlogItemRows: BacklogItemRow[] = [
+const backlogItems: backlogItem[] = [
   {
     id: 'DX-1',
     title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet',
@@ -66,30 +66,30 @@ const backlogItemRows: BacklogItemRow[] = [
 export const BacklogItems: React.FC = () => {
   const backlogItemsTable: JSX.Element[] = [];
 
-  // Use a for loop to create a TableRow for each item in the rows array.
-  for (let i = 0; i < backlogItemRows.length; i++) {
-    const row = backlogItemRows[i];
+  // Use a for loop to create a TableRow for each item in the backlogItems array.
+  for (let i = 0; i < backlogItems.length; i++) {
+    const backlogItem = backlogItems[i];
     backlogItemsTable.push(
-      <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-        <TableCell align="left">{row.id}</TableCell>
+      <TableRow key={backlogItem.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+        <TableCell align="left">{backlogItem.id}</TableCell>
         <TableCell align="left">Team</TableCell>
         <TableCell align="left">Type</TableCell>
         <TableCell align="left">Investment</TableCell>
-        <TableCell align="left">{row.title}</TableCell>
+        <TableCell align="left">{backlogItem.title}</TableCell>
         <TableCell align="left">
-          <CycleTime development={row.cycleTime.development} review={row.cycleTime.review} test={row.cycleTime.test} />
+          <CycleTime development={backlogItem.cycleTime.development} review={backlogItem.cycleTime.review} test={backlogItem.cycleTime.test} />
         </TableCell>
         <TableCell align="left">
           <BacklogItemFlags
-            showRework={row.flags.isRework}
-            showBlocked={row.flags.isBlocked}
-            showUpdated={row.flags.isUpdated}
-            showIncident={row.flags.isIncident}
-            showUnplanned={row.flags.isUnplanned}
-            showReEstimated={row.flags.isReEstimated}
-            showNonEstimated={row.flags.isNonEstimated}
-            showSubTasks={row.flags.isSubTasks}
-            showComments={row.flags.isComments}
+            showRework={backlogItem.flags.isRework}
+            showBlocked={backlogItem.flags.isBlocked}
+            showUpdated={backlogItem.flags.isUpdated}
+            showIncident={backlogItem.flags.isIncident}
+            showUnplanned={backlogItem.flags.isUnplanned}
+            showReEstimated={backlogItem.flags.isReEstimated}
+            showNonEstimated={backlogItem.flags.isNonEstimated}
+            showSubTasks={backlogItem.flags.isSubTasks}
+            showComments={backlogItem.flags.isComments}
           />
         </TableCell>
       </TableRow>,
