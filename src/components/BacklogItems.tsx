@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { CycleTime } from './CycleTime';
 import { BacklogItemFlags } from './BacklogItemFlags';
+import { NoteButton } from './NoteButton';
 
 interface ApiResponse {
   data: BacklogItem[];
@@ -28,9 +29,6 @@ interface BacklogItem {
     isIncident?: boolean;
     isUnplanned?: boolean;
     isReEstimated?: boolean;
-    isNonEstimated?: boolean;
-    isSubTasks?: boolean;
-    isComments?: boolean;
   };
 }
 
@@ -77,10 +75,10 @@ export const BacklogItems: React.FC = () => {
       <Table sx={{ tableLayout: 'auto', width: '100%' }}>
         <TableHead>
           <TableRow>
-            <TableCell align="left" sx={{ width: '50px' }}>
+            <TableCell align="left" sx={{ width: '100px' }}>
               <strong>ID</strong>
             </TableCell>
-            <TableCell align="left" sx={{ width: '100px' }}>
+            <TableCell align="left" sx={{ width: '50px' }}>
               <strong>Team</strong>
             </TableCell>
             <TableCell align="left" sx={{ width: '5%' }}>
@@ -93,6 +91,9 @@ export const BacklogItems: React.FC = () => {
               <strong>Title</strong>
             </TableCell>
             <TableCell align="left">
+              <strong>Status</strong>
+            </TableCell>
+            <TableCell align="left">
               <strong>Cycle Time</strong>
             </TableCell>
             <TableCell align="left">
@@ -103,11 +104,14 @@ export const BacklogItems: React.FC = () => {
         <TableBody>
           {backlogItems.map(({ id, title, cycleTime, flags }) => (
             <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell align="left">{id}</TableCell>
+              <TableCell align="left">
+                {id} <NoteButton />
+              </TableCell>
               <TableCell align="left">Team</TableCell>
               <TableCell align="left">Type</TableCell>
               <TableCell align="left">Investment</TableCell>
               <TableCell align="left">{title}</TableCell>
+              <TableCell align="left">Status</TableCell>
               <TableCell align="left">
                 <CycleTime development={cycleTime.development} review={cycleTime.review} test={cycleTime.test} />
               </TableCell>
@@ -119,9 +123,6 @@ export const BacklogItems: React.FC = () => {
                   showIncident={flags.isIncident}
                   showUnplanned={flags.isUnplanned}
                   showReEstimated={flags.isReEstimated}
-                  showNonEstimated={flags.isNonEstimated}
-                  showSubTasks={flags.isSubTasks}
-                  showComments={flags.isComments}
                 />
               </TableCell>
             </TableRow>

@@ -6,9 +6,6 @@ import UpdateIcon from '@mui/icons-material/Update';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import NumbersIcon from '@mui/icons-material/Numbers';
-import HourglassDisabledIcon from '@mui/icons-material/HourglassDisabled';
-import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import CommentIcon from '@mui/icons-material/Comment';
 
 interface BacklogItemFlagsProps {
   showRework?: boolean;
@@ -19,7 +16,6 @@ interface BacklogItemFlagsProps {
   showReEstimated?: boolean;
   showNonEstimated?: boolean;
   showSubTasks?: boolean;
-  showComments?: boolean;
 }
 
 export const BacklogItemFlags: React.FC<BacklogItemFlagsProps> = ({
@@ -29,9 +25,6 @@ export const BacklogItemFlags: React.FC<BacklogItemFlagsProps> = ({
   showIncident = false,
   showUnplanned = false,
   showReEstimated = false,
-  showNonEstimated = false,
-  showSubTasks = false,
-  showComments = false,
 }) => {
   return (
     <>
@@ -68,24 +61,6 @@ export const BacklogItemFlags: React.FC<BacklogItemFlagsProps> = ({
       {showReEstimated && (
         <Tooltip title="Re-Estimated">
           <NumbersIcon />
-        </Tooltip>
-      )}
-
-      {showNonEstimated && (
-        <Tooltip title="Non-Estimated">
-          <HourglassDisabledIcon />
-        </Tooltip>
-      )}
-
-      {showSubTasks && (
-        <Tooltip title="Sub-Tasks">
-          <AssignmentLateIcon />
-        </Tooltip>
-      )}
-
-      {showComments && (
-        <Tooltip title="Comments">
-          <CommentIcon />
         </Tooltip>
       )}
     </>
