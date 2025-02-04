@@ -1,35 +1,18 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { BacklogItemFlags } from './components/BacklogItemFlags';
+import { CycleTime } from './components/CycleTime';
+import { MetricChip } from './components/MetricChip';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Flight Deck</h1>
+      <MetricChip value={100} direction="descending" upperLimit={70} lowerLimit={20} symbol="%" />
+      <br />
+      <br />
+      <BacklogItemFlags showIncident={true} showBlocked={true} showNonEstimated showComments />
+      <br />
+      <br />
+      <CycleTime development={3} review={2} test={5} />
     </>
   );
-}
-
-export default App;
+};
