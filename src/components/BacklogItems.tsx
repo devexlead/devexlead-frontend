@@ -7,8 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { CycleTime } from './CycleTime';
-import { BacklogItemFlags } from './BacklogItemFlags';
+import { Tags } from './Tags';
 import { NoteButton } from './NoteButton';
+import Chip from '@mui/material/Chip';
 
 interface ApiResponse {
   data: BacklogItem[];
@@ -76,17 +77,11 @@ export const BacklogItems: React.FC = () => {
       <Table sx={{ tableLayout: 'auto', width: '100%' }}>
         <TableHead>
           <TableRow>
-            <TableCell align="left" sx={{ width: '100px' }}>
+            <TableCell align="left">
               <strong>ID</strong>
             </TableCell>
-            <TableCell align="left" sx={{ width: '50px' }}>
-              <strong>Team</strong>
-            </TableCell>
-            <TableCell align="left" sx={{ width: '5%' }}>
+            <TableCell align="left">
               <strong>Type</strong>
-            </TableCell>
-            <TableCell align="left" sx={{ width: '5%' }}>
-              <strong>Investment</strong>
             </TableCell>
             <TableCell align="left">
               <strong>Title</strong>
@@ -98,26 +93,30 @@ export const BacklogItems: React.FC = () => {
               <strong>Cycle Time</strong>
             </TableCell>
             <TableCell align="left">
-              <strong>Flags</strong>
+              <strong>Notes</strong>
+            </TableCell>
+            <TableCell align="left">
+              <strong>Tags</strong>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {backlogItems.map(({ id, title, noteCount, cycleTime, flags }) => (
             <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell align="left">{id}</TableCell>
               <TableCell align="left">
-                {id} <NoteButton count={noteCount} />
+                <Chip label="Story" />
               </TableCell>
-              <TableCell align="left">Team</TableCell>
-              <TableCell align="left">Type</TableCell>
-              <TableCell align="left">Investment</TableCell>
               <TableCell align="left">{title}</TableCell>
-              <TableCell align="left">Status</TableCell>
+              <TableCell align="left">In Progress</TableCell>
               <TableCell align="left">
-                <CycleTime development={cycleTime.development} review={cycleTime.review} test={cycleTime.test} />
+                <CycleTime developmentDays={cycleTime.development} reviewDays={cycleTime.review} testDays={cycleTime.test} />
+              </TableCell>
+              <TableCell>
+                <NoteButton count={noteCount} />
               </TableCell>
               <TableCell align="left">
-                <BacklogItemFlags
+                <Tags
                   showRework={flags.isRework}
                   showBlocked={flags.isBlocked}
                   showUpdated={flags.isUpdated}

@@ -6,12 +6,12 @@ import ScienceIcon from '@mui/icons-material/Science';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface CycleTimeProps {
-  development: number;
-  review: number;
-  test: number;
+  developmentDays: number;
+  reviewDays: number;
+  testDays: number;
 }
 
-export const CycleTime: React.FC<CycleTimeProps> = ({ development = 0, review = 0, test = 0 }) => {
+export const CycleTime: React.FC<CycleTimeProps> = ({ developmentDays = 0, reviewDays = 0, testDays = 0 }) => {
   // Helper function to determine the color based on the value.
   const getBadgeColor = (value: number) => {
     if (value < 2) {
@@ -23,46 +23,31 @@ export const CycleTime: React.FC<CycleTimeProps> = ({ development = 0, review = 
     }
   };
 
+  // Encapsulate the common anchorOrigin configuration and assert its literal type using 'as const'
+  const badgeAnchorOrigin = {
+    vertical: 'bottom',
+    horizontal: 'right',
+  } as const;
+
   return (
     <>
-      <Badge
-        badgeContent={development}
-        color={getBadgeColor(development)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-      >
-        <Tooltip title="Development">
+      <Tooltip title="Development Days">
+        <Badge badgeContent={developmentDays} color={getBadgeColor(developmentDays)} anchorOrigin={badgeAnchorOrigin}>
           <HardwareIcon />
-        </Tooltip>
-      </Badge>
+        </Badge>
+      </Tooltip>
       &nbsp;&nbsp;&nbsp;
-      <Badge
-        badgeContent={review}
-        color={getBadgeColor(review)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-      >
-        <Tooltip title="Review">
+      <Tooltip title="Review Days">
+        <Badge badgeContent={reviewDays} color={getBadgeColor(reviewDays)} anchorOrigin={badgeAnchorOrigin}>
           <VisibilityIcon />
-        </Tooltip>
-      </Badge>
+        </Badge>
+      </Tooltip>
       &nbsp;&nbsp;&nbsp;
-      <Badge
-        badgeContent={test}
-        color={getBadgeColor(test)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-      >
-        <Tooltip title="Testing">
+      <Tooltip title="Test Days">
+        <Badge badgeContent={testDays} color={getBadgeColor(testDays)} anchorOrigin={badgeAnchorOrigin}>
           <ScienceIcon />
-        </Tooltip>
-      </Badge>
+        </Badge>
+      </Tooltip>
     </>
   );
 };

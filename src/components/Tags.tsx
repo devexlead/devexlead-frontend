@@ -5,9 +5,9 @@ import BlockIcon from '@mui/icons-material/Block';
 import UpdateIcon from '@mui/icons-material/Update';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import NumbersIcon from '@mui/icons-material/Numbers';
+import SwapVerticalCircleRoundedIcon from '@mui/icons-material/SwapVerticalCircleRounded';
 
-interface BacklogItemFlagsProps {
+interface TagsProps {
   showRework?: boolean;
   showBlocked?: boolean;
   showUpdated?: boolean;
@@ -18,14 +18,7 @@ interface BacklogItemFlagsProps {
   showSubTasks?: boolean;
 }
 
-export const BacklogItemFlags: React.FC<BacklogItemFlagsProps> = ({
-  showRework = false,
-  showBlocked = false,
-  showUpdated = false,
-  showIncident = false,
-  showUnplanned = false,
-  showReEstimated = false,
-}) => {
+export const Tags: React.FC<TagsProps> = ({ showRework = false, showBlocked = false, showUpdated = false, showIncident = false, showUnplanned = false, showReEstimated = false }) => {
   return (
     <>
       {showRework && (
@@ -60,7 +53,7 @@ export const BacklogItemFlags: React.FC<BacklogItemFlagsProps> = ({
 
       {showReEstimated && (
         <Tooltip title="Re-Estimated">
-          <NumbersIcon />
+          <SwapVerticalCircleRoundedIcon />
         </Tooltip>
       )}
     </>
