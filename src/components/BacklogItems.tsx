@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { CycleTime } from './CycleTime';
 import { Tags } from './Tags';
 import { NoteButton } from './NoteButton';
-import Chip from '@mui/material/Chip';
+import StatusChip from './StatusChip';
 
 interface ApiResponse {
   data: BacklogItem[];
@@ -18,13 +18,14 @@ interface ApiResponse {
 interface BacklogItem {
   id: string;
   title: string;
-  noteCount: number;
+  status: string;
   cycleTime: {
     development: number;
     review: number;
     test: number;
   };
-  flags: {
+  noteCount: number;
+  tags: {
     isRework?: boolean;
     isBlocked?: boolean;
     isUpdated?: boolean;
@@ -101,14 +102,14 @@ export const BacklogItems: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {backlogItems.map(({ id, title, noteCount, cycleTime, flags }) => (
+          {backlogItems.map(({ id, title, status, cycleTime, noteCount, tags }) => (
             <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="left">{id}</TableCell>
-              <TableCell align="left">
-                <Chip label="Story" />
-              </TableCell>
+              <TableCell align="left">Task</TableCell>
               <TableCell align="left">{title}</TableCell>
-              <TableCell align="left">In Progress</TableCell>
+              <TableCell align="left">
+                <StatusChip status={status} />
+              </TableCell>
               <TableCell align="left">
                 <CycleTime developmentDays={cycleTime.development} reviewDays={cycleTime.review} testDays={cycleTime.test} />
               </TableCell>
@@ -117,12 +118,12 @@ export const BacklogItems: React.FC = () => {
               </TableCell>
               <TableCell align="left">
                 <Tags
-                  showRework={flags.isRework}
-                  showBlocked={flags.isBlocked}
-                  showUpdated={flags.isUpdated}
-                  showIncident={flags.isIncident}
-                  showUnplanned={flags.isUnplanned}
-                  showReEstimated={flags.isReEstimated}
+                  showRework={tags.isRework}
+                  showBlocked={tags.isBlocked}
+                  showUpdated={tags.isUpdated}
+                  showIncident={tags.isIncident}
+                  showUnplanned={tags.isUnplanned}
+                  showReEstimated={tags.isReEstimated}
                 />
               </TableCell>
             </TableRow>
